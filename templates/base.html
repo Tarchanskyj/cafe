@@ -7,9 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}{% endblock title %}</title>
-
-    <!-- Bootstrap core CSS -->
+    <title>Tables</title>
 
     <link href="{% static '/css/style.css' %}" rel="stylesheet">
 
@@ -25,59 +23,10 @@
   </head>
 
   <body>
-    {% if messages %}
-            <div class="alert alert-success" role="alert">
-				<ul class="messages">
-					{% for message in messages %}
-					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-					{% endfor %}
-				</ul>
-            </div>
-            {% endif %}
 
-  {{ context.date }}
-<form method="get">
-    {{ context.form.date }}
-    <button type="submit">Show!</button>
-</form>
+  {% block container %}
 
-<form method="post" class="form_table" id="hidden_form">
-{% csrf_token %}
-
-    <p class="input_hidden">{{ context.form.name }}</p>
-    <p class="input_hidden">{{ context.form.email }}</p>
-    <input hidden name="date" value="{{ context.date }}">
-    <p  class="input_hidden"><input type="submit" name="order_date" value="Place Order!"></p>
-
-    <div class="hall_rectangle">
-     {% for table in context.table_free %}
-         <label style="top: {{ table.y }}%; left: {{ table.x }}%; width: {{ table.width }}%; height: {{ table.length }}%;">
-             <input onchange="change_checkbox(this)" class="table" type="checkbox" value="{{ table.id }}" name="tables">
-             <span>{{ table.number }}</span>
-         </label>
-     {% endfor %}
-     {% for table in context.table_checked %}
-         <div class="table_rectangle" style="top: {{ table.y }}%; left: {{ table.x }}%; width: {{ table.width }}%; height: {{ table.length }}%;">
-         {{ table.number }}
-         </div>
-         {% endfor %}
- </div>
-</form>
-
-  <script type="text/javascript">
-      function change_checkbox(el){
-          var values = $('input:checkbox:checked.table').map(function () {
-            return this.value;
-            }).get();
-
-          if(values.length > 0){
-            $( ".input_hidden" ).css( "display", "block" );
-          }else{
-            $( ".input_hidden" ).css( "display", "none" );
-            }
-        }
-    </script>
-
+  {% endblock container %}
 
   </body>
 </html>

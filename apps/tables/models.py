@@ -14,7 +14,7 @@ class Table(models.Model):
     y = models.PositiveSmallIntegerField()
     length = models.PositiveSmallIntegerField()
     width = models.PositiveSmallIntegerField()
-    hall = models.ForeignKey('Hall', on_delete=models.CASCADE)
+    hall = models.ForeignKey('Hall', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.number
